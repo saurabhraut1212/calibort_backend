@@ -28,7 +28,7 @@ const getNumber = (value: string | undefined, fallback: number): number => {
 
 const config: Config = {
   database: {
-    host: process.env.DATABASE_HOST ?? "127.0.0.1",
+    host: process.env.DATABASE_HOST ?? "localhost",
     port: getNumber(process.env.DATABASE_PORT, 3306),
     database: process.env.DATABASE_NAME ?? "calibort",
     user: process.env.DATABASE_USER ?? "root",
