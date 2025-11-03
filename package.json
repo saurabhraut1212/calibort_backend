@@ -2,15 +2,16 @@
   "name": "calibort_backend",
   "version": "1.0.0",
   "main": "index.js",
-  "type":"module",
-  "scripts": {
+   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "build": "tsc -p .",
     "start": "node dist/server.js",
+    "start:prod": "node dist/server.js",
     "migrate": "ts-node src/db/migrate.ts",
     "seed": "ts-node src/db/seed.ts",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint --ext .ts src"
+    "lint": "eslint --ext .ts src",
+    "postinstall": "npm run build"
   },
   "keywords": [],
   "author": "",
@@ -18,11 +19,13 @@
   "description": "",
   "dependencies": {
     "bcryptjs": "^3.0.3",
+    "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "mysql2": "^3.15.3"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.5",
     "@types/node": "^24.10.0",
     "@typescript-eslint/eslint-plugin": "^8.46.2",
