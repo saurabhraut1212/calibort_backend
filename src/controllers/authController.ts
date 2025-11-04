@@ -23,7 +23,6 @@ export async function login(req: Request, res: Response): Promise<Response> {
       return res.status(400).json(fail("Missing email or password"));
     }
     const tokens = await authService.loginUser(dto);
-    // For simplicity return refresh token in body. In prod prefer httpOnly secure cookie.
     return res.status(200).json(ok("Login successful", tokens));
   } catch (err) {
     return res.status(401).json(fail((err as Error).message));

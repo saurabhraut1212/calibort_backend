@@ -3,10 +3,8 @@ import { forgotPasswordHandler, resetPasswordHandler } from "../controllers/pass
 
 const router = Router();
 
-// POST /api/auth/forgot-password
-router.post("/forgot-password", forgotPasswordHandler);
 
-// POST /api/auth/reset-password
+router.post("/forgot-password", forgotPasswordHandler);
 router.post("/reset-password", resetPasswordHandler);
 
 export default router;

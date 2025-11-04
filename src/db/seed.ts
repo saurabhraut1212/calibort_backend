@@ -1,7 +1,3 @@
-/**
- * Seed script - inserts an admin user with a hashed password.
- * Run: npm run seed
- */
 import pool from "./index";
 import bcrypt from "bcryptjs";
 import logger from "../utils/logger";
@@ -12,7 +8,7 @@ async function seed(): Promise<void> {
   try {
     const name = "Admin";
     const email = "admin@calibort.test";
-    const password = "Admin@123"; // change after first deploy
+    const password = "Admin@123"; 
     const saltRounds = 10;
     const hash = await bcrypt.hash(password, saltRounds);
 
@@ -29,7 +25,6 @@ async function seed(): Promise<void> {
       "INSERT INTO users (name, email, password_hash, provider) VALUES (?, ?, ?, 'local')",
       [name, email, hash]
     );
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     const insertId = (result as any).insertId as number;
     logger.info("Admin user created:", { email, id: insertId });
   } catch (err) {

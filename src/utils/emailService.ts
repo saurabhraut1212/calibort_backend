@@ -7,17 +7,14 @@ type SendResult = { accepted: string[] };
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST ?? "",
   port: Number(process.env.SMTP_PORT ?? 587),
-  secure: Number(process.env.SMTP_PORT ?? 587) === 465, // true for 465, false for other ports
+  secure: Number(process.env.SMTP_PORT ?? 587) === 465, 
   auth: {
     user: process.env.SMTP_USER ?? "",
     pass: process.env.SMTP_PASS ?? ""
   }
 });
 
-/**
- * Send reset password email with a link.
- * Plain URL should include token and email query params.
- */
+
 export async function sendResetPasswordEmail(to: string, resetLink: string): Promise<SendResult> {
   const from = process.env.EMAIL_FROM ?? config.server.env === "production" ? "no-reply@calibort.com" : "Calibort <no-reply@calibort.test>";
   const subject = "Reset your Calibort password";
@@ -37,7 +34,6 @@ export async function sendResetPasswordEmail(to: string, resetLink: string): Pro
     transporter.verify()
   .then(() => logger.info("SMTP verified and ready to send emails"))
   .catch((err) => logger.error("SMTP verify failed:", (err as Error).message, err));
-    // nodemailer MessageInfo has accepted array; cast safely
     return { accepted: (info as any).accepted ?? [] };
   } catch (err) {
     logger.error("Failed to send reset email", (err as Error).message);

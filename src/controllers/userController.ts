@@ -3,7 +3,7 @@ import * as userService from "../services/userServices";
 import { ok, fail } from "../utils/response";
 import type { AuthRequest } from "../middleware/requireAuth";
 
-/** GET /api/users?page=&limit=&q= */
+
 export async function listUsersHandler(req: Request, res: Response): Promise<Response> {
   try {
     const page = Math.max(Number(req.query.page ?? 1), 1);
@@ -16,7 +16,7 @@ export async function listUsersHandler(req: Request, res: Response): Promise<Res
   }
 }
 
-/** GET /api/users/:id */
+
 export async function getUserHandler(req: Request, res: Response): Promise<Response> {
   try {
     const id = Number(req.params.id);
@@ -29,7 +29,6 @@ export async function getUserHandler(req: Request, res: Response): Promise<Respo
   }
 }
 
-/** POST /api/users (admin) */
 export async function createUserHandler(req: Request, res: Response): Promise<Response> {
   try {
     const { name, email, password, role } = req.body as { name?: string; email?: string; password?: string; role?: "admin" | "user" };
@@ -41,7 +40,7 @@ export async function createUserHandler(req: Request, res: Response): Promise<Re
   }
 }
 
-/** PUT /api/users/:id (admin or owner) */
+
 export async function updateUserHandler(req: Request, res: Response): Promise<Response> {
   try {
     const id = Number(req.params.id);
@@ -50,11 +49,11 @@ export async function updateUserHandler(req: Request, res: Response): Promise<Re
     const auth = authReq.auth;
     if (!auth) return res.status(401).json(fail("Unauthorized"));
 
-    // allow admin or owner
+   
     const targetUser = await userService.getUser(id);
     if (!targetUser) return res.status(404).json(fail("User not found"));
 
-    // check ownership or admin
+
     const requester = await userService.findUserByEmail(auth.email);
     if (!requester) return res.status(401).json(fail("Unauthorized"));
 
@@ -69,7 +68,7 @@ export async function updateUserHandler(req: Request, res: Response): Promise<Re
       role?: "admin" | "user";
     };
 
-    // only admin can change role
+
     if (role && requester.role !== "admin") return res.status(403).json(fail("Only admin can change role"));
 
     await userService.updateUser(id, { name, email, password, avatar_url, role });
@@ -79,7 +78,7 @@ export async function updateUserHandler(req: Request, res: Response): Promise<Re
   }
 }
 
-/** DELETE /api/users/:id (admin only) */
+
 export async function deleteUserHandler(req: Request, res: Response): Promise<Response> {
   try {
     const id = Number(req.params.id);

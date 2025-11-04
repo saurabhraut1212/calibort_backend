@@ -6,7 +6,6 @@ export async function forgotPasswordHandler(req: Request, res: Response): Promis
   try {
     const { email } = req.body as { email?: string };
     if (!email) return res.status(400).json(fail("Missing email"));
-    // fire-and-forget: don't reveal existence to client
     await createAndSendResetToken(email);
     return res.status(200).json(ok("If the email exists, a reset link has been sent"));
   } catch (err) {
@@ -20,7 +19,6 @@ export async function resetPasswordHandler(req: Request, res: Response): Promise
     if (!email || !token || !newPassword) {
       return res.status(400).json(fail("email, token and newPassword are required"));
     }
-    // basic password rule check (you can expand in frontend and Formik/Yup)
     if (newPassword.length < 8) return res.status(400).json(fail("Password must be at least 8 characters"));
 
     await resetPassword(email, token, newPassword);

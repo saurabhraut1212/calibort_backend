@@ -11,7 +11,7 @@ export interface LoginDto {
 
 export interface TokenPair {
   accessToken: string;
-  accessTokenExpiresIn: number; // seconds
+  accessTokenExpiresIn: number;
   refreshToken: string;
-  refreshTokenExpiresIn: number; // seconds
+  refreshTokenExpiresIn: number; 
 }

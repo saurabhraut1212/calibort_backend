@@ -2,9 +2,6 @@ import pool from "./index";
 import type { RowDataPacket, OkPacket } from "mysql2";
 import { User } from "../types/models";
 
-/**
- * Paginated users list with optional search
- */
 export async function findUsersPaginated(
   page: number,
   limit: number,
@@ -50,9 +47,6 @@ export async function findUsersPaginated(
   }
 }
 
-/**
- * Get user by id
- */
 export async function getUserById(id: number): Promise<User | null> {
   const conn = await pool.getConnection();
   try {
@@ -79,9 +73,7 @@ export async function getUserById(id: number): Promise<User | null> {
   }
 }
 
-/**
- * Create user (returns inserted id)
- */
+
 export async function createUser(
   name: string,
   email: string,
@@ -100,9 +92,7 @@ export async function createUser(
   }
 }
 
-/**
- * Update user fields (partial)
- */
+
 export async function updateUser(
   id: number,
   fields: { name?: string; email?: string; password_hash?: string | null; avatar_url?: string | null; role?: "admin" | "user" }
@@ -143,9 +133,7 @@ export async function updateUser(
   }
 }
 
-/**
- * Delete user
- */
+
 export async function deleteUser(id: number): Promise<void> {
   const conn = await pool.getConnection();
   try {
@@ -155,9 +143,6 @@ export async function deleteUser(id: number): Promise<void> {
   }
 }
 
-/**
- * Find user by email
- */
 export async function findUserByEmail(email: string): Promise<User | null> {
   const conn = await pool.getConnection();
   try {
